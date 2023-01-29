@@ -6,12 +6,18 @@ It has two options- fix files in place, or just yell about files that fail.
 
 ## Usage
 
+### Install
+
+```bash
+pip install dapperdata
+```
+
 ### Fix All Files in Place
 
 If you want to fix all of the files in your current directory, recursively, run this command-
 
 ```bash
-python -m dapperdata.cli pretty . --no-dry-run
+dapperdata pretty . --no-dry-run
 ```
 
 ### Test Files without Changing
@@ -19,7 +25,7 @@ python -m dapperdata.cli pretty . --no-dry-run
 You can use dapperdata to run a test in CI to confirm that all of the files already match the preferred styling.
 
 ```bash
-python -m dapperdata.cli pretty .
+dapperdata pretty .
 ```
 
 This will return an list of all files to change, and will return a status code of 1 if any changes are needed. If no changes are needed the success status code (0) is returned.
