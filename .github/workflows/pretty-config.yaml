@@ -1,4 +1,4 @@
-name: Import Sorting
+name: Configuration File Formatting
 
 on:
   push:
@@ -21,4 +21,4 @@ jobs:
         run: make install
 
       - name: Test Configuration Formatting
-        run: python -m pretty-config.cli .
+        run: pretty-config pretty .
