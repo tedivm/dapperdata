@@ -1,6 +1,7 @@
 import pathlib
 
 import pytest
+
 from dapperdata.formatters.json import json_formatter
 
 JSON_TEST_PATH = pathlib.Path(__file__).parent.resolve() / "json_tests"
