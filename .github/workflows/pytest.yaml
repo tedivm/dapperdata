@@ -3,6 +3,9 @@ name: PyTest
 on:
   push:
 
+env:
+  COLUMNS: 120
+
 jobs:
   pytest:
     runs-on: ubuntu-latest
