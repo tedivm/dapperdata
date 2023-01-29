@@ -20,17 +20,17 @@ if os.path.exists(".gitignore"):
     gitignore_directories = set([])
     with open(".gitignore", "rb") as f:
         for line in f.readlines():
-            line = line.decode("utf-8")
-            if "*" in line:
+            line_string = line.decode("utf-8")
+            if "*" in line_string:
                 continue
-            if line.startswith("#"):
+            if line_string.startswith("#"):
                 continue
-            if "#" in line:
-                line = line.split("#")[0]
-            line = line.strip().strip("/")
-            if len(line) == 0:
+            if "#" in line_string:
+                line_string = line_string.split("#")[0]
+            line_string = line_string.strip().strip("/")
+            if len(line_string) == 0:
                 continue
-            gitignore_directories.add(line)
+            gitignore_directories.add(line_string)
     if len(gitignore_directories) > 0:
         default_data["exclude_paths"] = set(default_data.get("exclude_paths", [])) | gitignore_directories
 

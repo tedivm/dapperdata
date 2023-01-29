@@ -16,6 +16,7 @@ class YAMLWithStrings(YAML):
         YAML.dump(self, data, stream, **kw)
         if return_string:
             return stream.getvalue()
+        return None
 
 
 #
@@ -23,10 +24,10 @@ class YAMLWithStrings(YAML):
 #
 
 # Save the original comment writer so our extended version can use it.
-ruamel.yaml.emitter.Emitter.write_comment_original = ruamel.yaml.emitter.Emitter.write_comment
+ruamel.yaml.emitter.Emitter.write_comment_original = ruamel.yaml.emitter.Emitter.write_comment  # type: ignore
 
 # Create the new comment writer.
-def strip_empty_lines_write_comment(self, comment, pre=False):
+def strip_empty_lines_write_comment(self, comment: Any, pre: bool = False) -> None:
     # Check if comment is nothing but newlines.
     # Then replace with a single new line.
     string_check = comment.value.replace("\n", "")
@@ -37,13 +38,13 @@ def strip_empty_lines_write_comment(self, comment, pre=False):
 
 
 # Set ruamel.yaml to use the new writer.
-ruamel.yaml.emitter.Emitter.write_comment = strip_empty_lines_write_comment
+ruamel.yaml.emitter.Emitter.write_comment = strip_empty_lines_write_comment  # type: ignore
 
 
 yaml = YAMLWithStrings()
-yaml.preserve_quotes = True
+yaml.preserve_quotes = True  # type: ignore
 yaml.default_flow_style = False
-yaml.width = 120
+yaml.width = 120  # type: ignore
 yaml.indent(mapping=2, sequence=4, offset=2)
 
 
@@ -52,4 +53,4 @@ def yaml_formatter(input: str) -> str:
     # comments and other useful data. The dump function uses that to add
     # comments back in.
     data = yaml.load(input)
-    return yaml.dump(data)
+    return yaml.dump(data)  # type: ignore
