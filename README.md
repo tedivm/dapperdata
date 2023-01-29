@@ -37,7 +37,7 @@ exclude_paths = [".venv", "tests", ".git", ".vscode"]
 ### Environment Variables
 
 ```bash
-PRETTY_CONFIG_EXCLUDE_PATHS='[".venv", "tests", ".git", ".vscode"]'
+DAPPERDATA_EXCLUDE_PATHS='[".venv", "tests", ".git", ".vscode"]'
 ```
 
 ## Excluded Files

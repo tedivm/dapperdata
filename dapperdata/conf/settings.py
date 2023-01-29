@@ -43,4 +43,4 @@ class Settings(BaseSettings):
     exclude_paths: List[str] = default_data.get("exclude_paths", [])
 
     class Config:
-        env_prefix = "PRETTY_CONFIG_"
+        env_prefix = "dapperdata_"

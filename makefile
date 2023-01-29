@@ -49,7 +49,7 @@ $(PACKAGE_CHECK): $(PYTHON_VENV)
 #
 
 .PHONY: pretty
-pretty: black_fixes isort_fixes pretty_config_fixes
+pretty: black_fixes isort_fixes dapperdata_fixes
 
 .PHONY: black_fixes
 black_fixes:
@@ -59,8 +59,8 @@ black_fixes:
 isort_fixes:
 	$(PYTHON) -m isort .
 
-.PHONY: pretty_config_fixes
-pretty_config_fixes:
+.PHONY: dapperdata_fixes
+dapperdata_fixes:
 	$(PYTHON) -m dapperdata.cli pretty . --no-dry-run
 
 
@@ -69,7 +69,7 @@ pretty_config_fixes:
 #
 
 .PHONY: tests
-tests: install pytest isort_check black_check mypy_check pretty_config_check
+tests: install pytest isort_check black_check mypy_check dapperdata_check
 
 .PHONY: pytest
 pytest:
@@ -91,8 +91,8 @@ black_check:
 mypy_check:
 	$(PYTHON) -m mypy ${PACKAGE_SLUG}
 
-.PHONY: pretty_config_check
-pretty_config_check:
+.PHONY: dapperdata_check
+dapperdata_check:
 	$(PYTHON) -m dapperdata.cli pretty . --dry-run
 
 
