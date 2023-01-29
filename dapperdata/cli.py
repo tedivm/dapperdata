@@ -1,6 +1,6 @@
 import os
 import sys
-from typing import Callable, List, Literal
+from typing import Callable, List, Literal, Set
 
 import click
 import typer
@@ -49,8 +49,12 @@ def format_file(file: str, dry_run: bool = True) -> bool:
     return contents != formatted
 
 
-def format_directory(dirname: str, dry_run: bool = True, excluded_paths: List[str] = []) -> set[str]:
+def format_directory(dirname: str, dry_run: bool = True, excluded_paths: Set[str] = set([])) -> Set[str]:
     changed_files = set([])
+
+    # Pretty much never want to go into git management directories.
+    excluded_paths.add(".git")
+
     for (root, dirs, files) in os.walk(dirname, topdown=True):
 
         if root.startswith("./"):
@@ -60,11 +64,13 @@ def format_directory(dirname: str, dry_run: bool = True, excluded_paths: List[st
         for excluded_path in excluded_paths:
             if root.startswith(excluded_path):
                 exclude_root = True
-                # Remove directories to prevent them from being crawled.
-                for dir in dirs:
-                    dirs.remove(dir)
+                break
 
         if exclude_root:
+            # Remove directories to prevent them from being crawled.
+            # This only works when `topdown` is True on the os.walk call.
+            for dir in dirs:
+                dirs.remove(dir)
             continue
 
         for dir in dirs:

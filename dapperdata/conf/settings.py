@@ -1,6 +1,6 @@
 import os
 import sys
-from typing import List
+from typing import List, Set
 
 from pydantic import BaseSettings
 
@@ -40,7 +40,7 @@ class Settings(BaseSettings):
     project_name: str = "pretty-config"
     debug: bool = False
 
-    exclude_paths: List[str] = default_data.get("exclude_paths", [])
+    exclude_paths: Set[str] = default_data.get("exclude_paths", [])
 
     class Config:
         env_prefix = "dapperdata_"
