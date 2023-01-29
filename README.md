@@ -1,6 +1,6 @@
-# pretty-config
+# DapperData
 
-Pretty Config is an opinionated formatter for YAML and JSON files.
+DapperData is an opinionated formatter for YAML and JSON files.
 
 It has two options- fix files in place, or just yell about files that fail.
 
@@ -11,15 +11,15 @@ It has two options- fix files in place, or just yell about files that fail.
 If you want to fix all of the files in your current directory, recursively, run this command-
 
 ```bash
-python -m pretty-config.cli pretty . --no-dry-run
+python -m dapperdata.cli pretty . --no-dry-run
 ```
 
 ### Test Files without Changing
 
-You can use pretty-config to run a test in CI to confirm that all of the files already match the preferred styling.
+You can use dapperdata to run a test in CI to confirm that all of the files already match the preferred styling.
 
 ```bash
-python -m pretty-config.cli pretty .
+python -m dapperdata.cli pretty .
 ```
 
 This will return an list of all files to change, and will return a status code of 1 if any changes are needed. If no changes are needed the success status code (0) is returned.
@@ -30,7 +30,7 @@ This will return an list of all files to change, and will return a status code o
 ### pyproject.toml
 
 ```toml
-[tool.pretty-config]
+[tool.dapperdata]
 exclude_paths = [".venv", "tests", ".git", ".vscode"]
 ```
 

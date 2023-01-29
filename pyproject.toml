@@ -5,7 +5,7 @@ requires = ["setuptools>=61.0", "versioneer>=0.25"]
 [tool.isort]
 profile = "black"
 skip = [".venv"]
-src_paths = ["prettyconfig", "tests"]
+src_paths = ["dapperdata", "tests"]
 
 [tool.black]
 exclude = '''
@@ -28,5 +28,5 @@ exclude = '''
 line-length = 120
 target-version = ['py38', 'py39', 'py310', 'py311']
 
-[tool.pretty-config]
+[tool.dapperdata]
 exclude_paths = [".venv", "tests", ".git", ".vscode"]

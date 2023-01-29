@@ -1,5 +1,5 @@
 SHELL := /bin/bash
-PACKAGE_SLUG=prettyconfig
+PACKAGE_SLUG=dapperdata
 ifdef CI
 	PYTHON_PYENV :=
 	PYTHON_VERSION := $(shell python --version|cut -d" " -f2)
@@ -61,7 +61,7 @@ isort_fixes:
 
 .PHONY: pretty_config_fixes
 pretty_config_fixes:
-	$(PYTHON) -m prettyconfig.cli pretty . --no-dry-run
+	$(PYTHON) -m dapperdata.cli pretty . --no-dry-run
 
 
 #
@@ -93,7 +93,7 @@ mypy_check:
 
 .PHONY: pretty_config_check
 pretty_config_check:
-	$(PYTHON) -m prettyconfig.cli pretty . --dry-run
+	$(PYTHON) -m dapperdata.cli pretty . --dry-run
 
 
 #
