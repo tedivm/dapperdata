@@ -53,4 +53,4 @@ def yaml_formatter(input: str) -> str:
     # comments and other useful data. The dump function uses that to add
     # comments back in.
     data = yaml.load(input)
-    return yaml.dump(data)  # type: ignore
+    return yaml.dump(data).strip() + "\n"  # type: ignore

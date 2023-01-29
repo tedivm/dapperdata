@@ -13,7 +13,7 @@ default_data = {}
 if os.path.exists("pyproject.toml"):
     with open("pyproject.toml", "rb") as f:
         toml_data = tomllib.load(f)
-    default_data.update(toml_data.get("tool", {}).get("pretty-config", {}))
+    default_data.update(toml_data.get("tool", {}).get("dapperdata", {}))
 
 
 if os.path.exists(".gitignore"):
