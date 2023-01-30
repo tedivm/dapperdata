@@ -51,6 +51,7 @@ def format_file(file: str, dry_run: bool = True) -> bool:
 
 def format_directory(dirname: str, dry_run: bool = True, excluded_paths: Set[str] = set([])) -> Set[str]:
     changed_files = set([])
+    excluded_paths = set([x.strip("/") for x in excluded_paths])
 
     # Pretty much never want to go into git management directories.
     excluded_paths.add(".git")
@@ -62,7 +63,7 @@ def format_directory(dirname: str, dry_run: bool = True, excluded_paths: Set[str
 
         exclude_root = False
         for excluded_path in excluded_paths:
-            if root.startswith(excluded_path):
+            if root == excluded_path:
                 exclude_root = True
                 break
 
@@ -75,7 +76,11 @@ def format_directory(dirname: str, dry_run: bool = True, excluded_paths: Set[str
 
         for dir in dirs:
             for excluded_path in excluded_paths:
-                if dir.strip("/.").startswith(excluded_path):
+                if dir.startswith("./"):
+                    normalized_dir = dir[2:]
+                else:
+                    normalized_dir = dir
+                if normalized_dir == excluded_path:
                     dirs.remove(dir)
 
         for path in files:
