@@ -56,8 +56,7 @@ def format_directory(dirname: str, dry_run: bool = True, excluded_paths: Set[str
     # Pretty much never want to go into git management directories.
     excluded_paths.add(".git")
 
-    for (root, dirs, files) in os.walk(dirname, topdown=True):
-
+    for root, dirs, files in os.walk(dirname, topdown=True):
         if root.startswith("./"):
             root = root[2:]
 
@@ -70,22 +69,21 @@ def format_directory(dirname: str, dry_run: bool = True, excluded_paths: Set[str
         if exclude_root:
             # Remove directories to prevent them from being crawled.
             # This only works when `topdown` is True on the os.walk call.
-            for dir in dirs:
-                dirs.remove(dir)
+            dirs[:] = []
             continue
 
         for dir in dirs:
+            if dir.startswith("./"):
+                normalized_dir = dir[2:]
+            else:
+                normalized_dir = dir
             for excluded_path in excluded_paths:
-                if dir.startswith("./"):
-                    normalized_dir = dir[2:]
-                else:
-                    normalized_dir = dir
-                if normalized_dir == excluded_path:
+                if normalized_dir.startswith(excluded_path):
                     dirs.remove(dir)
+                    break
 
         for path in files:
             file_path = f"{root}/{path}"
-
             if file_path in excluded_paths:
                 continue
 
@@ -95,7 +93,7 @@ def format_directory(dirname: str, dry_run: bool = True, excluded_paths: Set[str
     return changed_files
 
 
-@app.command()
+@app.command()  # type: ignore
 @click.argument("filename", type=click.Path(exists=True, file_okay=True, dir_okay=False))
 @click.option("-d", "--dry-run", default=True)
 def format(filename: str, dry_run: bool = True):
@@ -106,14 +104,12 @@ def format(filename: str, dry_run: bool = True):
         print("No changes detected.")
 
 
-@app.command()
+@app.command()  # type: ignore
 @click.argument("dirname", type=click.Path(exists=True, file_okay=False, dir_okay=True))
 @click.option("--dry-run", "-d", default=True)
 def pretty(dirname: str, dry_run: bool = True):
-
     if dry_run:
         typer.echo("Dry Run- No changes will be made.")
-
     changed_files = format_directory(dirname, dry_run, excluded_paths=settings.exclude_paths)
 
     if len(changed_files):

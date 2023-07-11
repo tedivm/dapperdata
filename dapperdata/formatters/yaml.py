@@ -26,6 +26,7 @@ class YAMLWithStrings(YAML):
 # Save the original comment writer so our extended version can use it.
 ruamel.yaml.emitter.Emitter.write_comment_original = ruamel.yaml.emitter.Emitter.write_comment  # type: ignore
 
+
 # Create the new comment writer.
 def strip_empty_lines_write_comment(self, comment: Any, pre: bool = False) -> None:
     # Check if comment is nothing but newlines.
