@@ -58,7 +58,6 @@ def format_directory(dirname: str, dry_run: bool = True, excluded_paths: Set[str
     excluded_paths.add(".venv")
     excluded_paths.add("__pycache__")
 
-
     for root, dirs, files in os.walk(dirname, topdown=True):
         if root.startswith("./"):
             root = root[2:]
@@ -115,7 +114,7 @@ def format(filename: str, dry_run: bool = True):
 def pretty(dirname: str, dry_run: bool = True):
     if dry_run:
         typer.echo("Dry Run- No changes will be made.")
-
+    print(settings.exclude_paths)
     changed_files = format_directory(dirname, dry_run, excluded_paths=settings.exclude_paths)
 
     if len(changed_files):
