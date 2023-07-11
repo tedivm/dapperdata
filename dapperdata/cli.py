@@ -55,8 +55,8 @@ def format_directory(dirname: str, dry_run: bool = True, excluded_paths: Set[str
 
     # Pretty much never want to go into git management directories.
     excluded_paths.add(".git")
-    excluded_paths.add(".venv")
-    excluded_paths.add("__pycache__")
+
+    print(excluded_paths)
 
     for root, dirs, files in os.walk(dirname, topdown=True):
         if root.startswith("./"):
@@ -76,12 +76,14 @@ def format_directory(dirname: str, dry_run: bool = True, excluded_paths: Set[str
             continue
 
         for dir in dirs:
+            print(dir)
+            if dir.startswith("./"):
+                normalized_dir = dir[2:]
+            else:
+                normalized_dir = dir
             for excluded_path in excluded_paths:
-                if dir.startswith("./"):
-                    normalized_dir = dir[2:]
-                else:
-                    normalized_dir = dir
-                if excluded_path in normalized_dir:
+                if normalized_dir.startswith(excluded_path):
+                    print("exclude match, removing")
                     dirs.remove(dir)
                     break
 
@@ -114,7 +116,6 @@ def format(filename: str, dry_run: bool = True):
 def pretty(dirname: str, dry_run: bool = True):
     if dry_run:
         typer.echo("Dry Run- No changes will be made.")
-    print(settings.exclude_paths)
     changed_files = format_directory(dirname, dry_run, excluded_paths=settings.exclude_paths)
 
     if len(changed_files):
