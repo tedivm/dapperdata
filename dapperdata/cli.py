@@ -84,6 +84,7 @@ def format_directory(dirname: str, dry_run: bool = True, excluded_paths: Set[str
                     normalized_dir = dir
                 if excluded_path in normalized_dir:
                     dirs.remove(dir)
+                    break
 
         for path in files:
             file_path = f"{root}/{path}"
