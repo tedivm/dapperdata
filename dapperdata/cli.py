@@ -55,6 +55,7 @@ def format_directory(dirname: str, dry_run: bool = True, excluded_paths: Set[str
 
     # Pretty much never want to go into git management directories.
     excluded_paths.add(".git")
+    excluded_paths.add(".venv")
 
     for root, dirs, files in os.walk(dirname, topdown=True):
         if root.startswith("./"):
