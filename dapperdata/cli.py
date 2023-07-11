@@ -56,6 +56,8 @@ def format_directory(dirname: str, dry_run: bool = True, excluded_paths: Set[str
     # Pretty much never want to go into git management directories.
     excluded_paths.add(".git")
     excluded_paths.add(".venv")
+    excluded_paths.add("__pycache__")
+
 
     for root, dirs, files in os.walk(dirname, topdown=True):
         if root.startswith("./"):
@@ -80,7 +82,7 @@ def format_directory(dirname: str, dry_run: bool = True, excluded_paths: Set[str
                     normalized_dir = dir[2:]
                 else:
                     normalized_dir = dir
-                if normalized_dir == excluded_path:
+                if excluded_path in normalized_dir:
                     dirs.remove(dir)
 
         for path in files:
