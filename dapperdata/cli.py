@@ -56,10 +56,7 @@ def format_directory(dirname: str, dry_run: bool = True, excluded_paths: Set[str
     # Pretty much never want to go into git management directories.
     excluded_paths.add(".git")
 
-    print(excluded_paths)
-
     for root, dirs, files in os.walk(dirname, topdown=True):
-        print(f"root: {root}")
         if root.startswith("./"):
             root = root[2:]
 
@@ -76,20 +73,17 @@ def format_directory(dirname: str, dry_run: bool = True, excluded_paths: Set[str
             continue
 
         for dir in dirs:
-            print(f"dir {dir}")
             if dir.startswith("./"):
                 normalized_dir = dir[2:]
             else:
                 normalized_dir = dir
             for excluded_path in excluded_paths:
                 if normalized_dir.startswith(excluded_path):
-                    print(f"exclude match, removing {dir}")
                     dirs.remove(dir)
                     break
 
         for path in files:
             file_path = f"{root}/{path}"
-            print(f"file: {file_path}")
             if file_path in excluded_paths:
                 continue
 
