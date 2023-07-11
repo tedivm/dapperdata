@@ -2,7 +2,7 @@ import os
 import sys
 from typing import List, Set
 
-from pydantic import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 if sys.version_info >= (3, 11):
     import tomllib
@@ -36,11 +36,9 @@ if os.path.exists(".gitignore"):
 
 
 class Settings(BaseSettings):
-
     project_name: str = "pretty-config"
     debug: bool = False
 
     exclude_paths: Set[str] = default_data.get("exclude_paths", [])
 
-    class Config:
-        env_prefix = "dapperdata_"
+    model_config = SettingsConfigDict(env_prefix="dapperdata_")
